@@ -153,7 +153,6 @@ export default function App() {
           )}
         </div>
         <div className="w-full max-w-xl rounded-lg p-6 mb-5">
-          <h3 className="text-xl font-semibold mb-4 text-center">Accepted File Formats</h3>
           <div className="grid grid-cols-3 gap-3">
             {acceptedFormats.map((format, index) => (
               <div key={index} className="flex flex-col items-center mt-5">
@@ -181,12 +180,6 @@ export default function App() {
               <a href="https://github.com/yourusername/slidedrop" className="flex items-center text-white text-left">
                 <Github className="w-4 h-4 mr-1" />
                 Source Code
-              </a>
-            </Button>
-            <Button variant="link" asChild>
-              <a href="/help" className="flex items-center text-white text-left">
-                <HelpCircle className="w-4 h-4 mr-1" />
-                Need Help?
               </a>
             </Button>
           </div>
@@ -256,7 +249,14 @@ export default function App() {
             <p>
               All data stays on the client and nothing gets transferred via the internet. This is totally safe!
             </p>
+            
           </DialogDescription>
+          <Button variant="link" asChild>
+              <a href="/help" className="flex items-center text-white text-left">
+                <HelpCircle className="w-4 h-4 mr-1" />
+                Need Help?
+              </a>
+            </Button>
         </DialogContent>
       </Dialog>
 
