@@ -77,14 +77,54 @@ export default function App() {
   ]
 
   const examples = [
-    { image: "/14yrold.png", caption: "The surface of the left hemisphere of a 2 years old healthy brain. The scalar overlay shows the bending energy based on Curvedness. Loading time: ++", loadingTime: 3 },
+    { image: "/14yrold.png", caption: "The surface of the left hemisphere of a 2 years old healthy brain. The scalar overlay shows the bending energy based on Curvedness.", loadingTime: 2 },
     { image: "/avf_small.png", caption: "A contrast enhanced 3D MR image showing an arteriovenous fistula which is a bypass created by joining an artery and a vein, located in an arm.", loadingTime: 1 },
     { image: "/2yrold_small.png", caption: "The surface of the left hemisphere of a 2 years old healthy brain. The scalar overlay shows the bending energy based on Curvedness.", loadingTime: 2 },
     { image: "/brainstem_small.png", caption: "A region of the brainstem of a human adult including an automatically generated segmentation as a label map colorized using an anatomical color table.", loadingTime: 1 },
   ]
 
   // <img src="/logo.svg" alt="SlideDrop Logo" width={40} height={40} />
-  
+  const ExamplesComponent = () => (
+    <div className="flex flex-col items-start mb-4">
+      <p className="mb-2">Try the examples..</p>
+      <div className="flex justify-start space-x-2 mb-2">
+        {examples.map((example, index) => (
+          <div 
+            key={index} 
+            className={`flex flex-col items-center ${index === hoveredExample ? 'scale-105' : 'scale-100'} transition-all duration-300`}
+            onMouseEnter={() => setHoveredExample(index)}
+          >
+            <Button variant="ghost" className="p-0 h-auto relative">
+              <img
+                src={example.image}
+                alt={`Example ${index + 1}`}
+                width={80}
+                height={80}
+                className="rounded-md border border-gray-700"
+              />
+              {index === hoveredExample && (
+                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-0 h-0 
+                                border-l-4 border-r-4 border-t-4 border-t-gray-700 border-l-transparent border-r-transparent" />
+              )}
+            </Button>
+          </div>
+        ))}
+      </div>
+      
+      <div className="text-center min-h-[3rem] flex items-center justify-center bg-gray-700 rounded-md p-2 transition-all duration-300 relative text-xs">
+        <p className="pr-8">
+          {examples[hoveredExample].caption}
+        </p>
+        <div className={`absolute bottom-1 right-1 flex items-center ${getLoadingTimeColor(examples[hoveredExample].loadingTime)} rounded-full px-1 py-0.5 text-[10px]`}>
+          <Clock className="w-2 h-2 mr-0.5" />
+          <span className="font-semibold">
+            {examples[hoveredExample].loadingTime}/5
+          </span>
+        </div>
+      </div>
+    </div>
+  )
+
   return (
     <>
     <div className={`h-screen w-screen bg-black text-white flex flex-col transition-opacity duration-1000 ${isFadingOut ? 'opacity-0' : 'opacity-100'}`}>
@@ -93,10 +133,17 @@ export default function App() {
           
           <a href="/"><h1 className="text-3xl font-bold text-gray-400 hover:text-white transition">Slice:Drop</h1></a>
         </div>
-
-        <button onClick={() => setIsExamplesOpen(true)} className="px-6 py-2 bg-gray-800 text-gray-400 rounded-lg font-bold transform hover:-translate-y-1 transition hover:text-white duration-400">
-          Run Examples
-        </button>
+        <div className="md:hidden">
+        <Button
+            onClick={() => setIsExamplesOpen(true)}
+            variant="secondary"
+          >
+            Run Examples
+          </Button>
+        </div>
+        <div className="hidden md:block absolute top-6 right-6 w-[316px]">
+          <ExamplesComponent />
+        </div>
       </header>
       <main className="flex-1 flex flex-col items-center justify-center p-6">
         <h2 className="text-2xl font-semibold mb-3 text-center text-gray-400">Instantly view scientific and medical imaging data in 3D.</h2>
