@@ -9,6 +9,6 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  base: "/slicedrop.github.com/reload/",
+  base: "/slicedrop.github.com/",
   
 })
