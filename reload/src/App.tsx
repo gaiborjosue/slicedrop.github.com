@@ -1,8 +1,9 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
-import { Upload, Github, HelpCircle, Info,Clock  } from 'lucide-react'
+import { Upload, Github, HelpCircle, Info  } from 'lucide-react'
 import Ripple from "@/components/ui/ripple";
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
+import Header from './components/Header';
 
 interface AppProps {
   setFiles: (files: File[]) => void; // Define the type for setFiles, which is a function that accepts an array of Files
@@ -10,11 +11,9 @@ interface AppProps {
 export default function App({ setFiles }: AppProps) {
   const [isDragging, setIsDragging] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
-  const [isExamplesOpen, setIsExamplesOpen] = useState(false)
   const [isFadingOut, setIsFadingOut] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [isInfoOpen, setIsInfoOpen] = useState(false)
-  const [hoveredExample, setHoveredExample] = useState<number>(0)
   const [files, setLocalFiles] = useState<File[]>([]);
 
   
@@ -48,11 +47,6 @@ export default function App({ setFiles }: AppProps) {
     setFiles(droppedFiles); // Pass files to Niivue
   }, [setFiles]);
 
-  const getLoadingTimeColor = (loadingTime: number) => {
-    if (loadingTime <= 2) return 'bg-green-500'
-    if (loadingTime <= 4) return 'bg-yellow-500'
-    return 'bg-red-500'
-  }
 
   useEffect(() => {
     if (isFadingOut) {
@@ -79,75 +73,10 @@ export default function App({ setFiles }: AppProps) {
     }
   ]
 
-  const examples = [
-    { image: "/14yrold.png", caption: "The surface of the left hemisphere of a 2 years old healthy brain. The scalar overlay shows the bending energy based on Curvedness.", loadingTime: 2 },
-    { image: "/avf_small.png", caption: "A contrast enhanced 3D MR image showing an arteriovenous fistula which is a bypass created by joining an artery and a vein, located in an arm.", loadingTime: 1 },
-    { image: "/2yrold_small.png", caption: "The surface of the left hemisphere of a 2 years old healthy brain. The scalar overlay shows the bending energy based on Curvedness.", loadingTime: 2 },
-    { image: "/brainstem_small.png", caption: "A region of the brainstem of a human adult including an automatically generated segmentation as a label map colorized using an anatomical color table.", loadingTime: 1 },
-  ]
-
-  // <img src="/logo.svg" alt="SlideDrop Logo" width={40} height={40} />
-  const ExamplesComponent = () => (
-    <div className="flex flex-col items-start mb-4">
-      <p className="mb-2">Try the examples..</p>
-      <div className="flex justify-start space-x-2 mb-2">
-        {examples.map((example, index) => (
-          <div 
-            key={index} 
-            className={`flex flex-col items-center ${index === hoveredExample ? 'scale-110' : 'scale-100'} transition-all duration-300`}
-            onMouseEnter={() => setHoveredExample(index)}
-          >
-            <Button variant="ghost" className="p-0 h-auto relative">
-              <img
-                src={example.image}
-                alt={`Example ${index + 1}`}
-                width={80}
-                height={80}
-                className="rounded-md border border-gray-700"
-              />
-              {index === hoveredExample && (
-                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-0 h-0 
-                                border-l-4 border-r-4 border-t-4 border-t-gray-700 border-l-transparent border-r-transparent" />
-              )}
-            </Button>
-          </div>
-        ))}
-      </div>
-      
-      <div className="text-center min-h-[3rem] flex items-center justify-center bg-gray-700 rounded-md p-2 transition-all duration-300 relative text-xs">
-        <p className="pr-8">
-          {examples[hoveredExample].caption}
-        </p>
-        <div className={`absolute bottom-1 right-1 flex items-center ${getLoadingTimeColor(examples[hoveredExample].loadingTime)} rounded-full px-1 py-0.5 text-[10px]`}>
-          <Clock className="w-2 h-2 mr-0.5" />
-          <span className="font-semibold">
-            {examples[hoveredExample].loadingTime}/5
-          </span>
-        </div>
-      </div>
-    </div>
-  )
-
   return (
     <>
     <div className={`h-screen w-screen bg-black text-white flex flex-col transition-opacity duration-1000 ${isFadingOut ? 'opacity-0' : 'opacity-100'}`}>
-      <header className="p-6 flex justify-between items-center">
-        <div className="flex items-center space-x-2">
-          
-          <a href="/"><h1 className="text-3xl font-bold text-gray-400 hover:text-white transition">Slice:Drop</h1></a>
-        </div>
-        <div className="xl-custom:hidden">
-        <Button
-            onClick={() => setIsExamplesOpen(true)}
-            variant="secondary"
-          >
-            Run Examples
-          </Button>
-        </div>
-        <div className="hidden xl-custom:block absolute top-6 right-6 w-[316px]">
-          <ExamplesComponent />
-        </div>
-      </header>
+      <Header showExamples={true}/>
       <main className="flex-1 flex flex-col items-center justify-center p-6">
         <h2 className="text-2xl font-semibold mb-3 text-center text-gray-400">Instantly view scientific and medical imaging data in 3D.</h2>
         <p className="text-sm text-gray-500">Your data stays on your computer. No upload required!</p>
@@ -177,7 +106,7 @@ export default function App({ setFiles }: AppProps) {
                 rgba(59, 130, 246, 0.4) 0%, 
                 rgba(59, 130, 246, 0.1) 30%, 
                 rgba(17, 24, 39, 0) 45%)`,
-              transform: isDragging || isHovering ? 'scale(1.25)' : 'scale(0.75)',
+              transform: isDragging || isHovering ? 'scale(1.05)' : 'scale(0.75)',
             }}
           />
           <div 
@@ -239,50 +168,6 @@ export default function App({ setFiles }: AppProps) {
           </Button>
         </div>
       </footer>
-
-      <Dialog open={isExamplesOpen} onOpenChange={setIsExamplesOpen}>
-        <DialogContent className="bg-gray-800 text-white">
-          <DialogHeader>
-            <DialogTitle>Run Examples</DialogTitle>
-          </DialogHeader>
-          <div className="flex flex-col items-center">
-            <div className="flex justify-between items-start space-x-4 mb-4">
-              {examples.map((example, index) => (
-                <div 
-                  key={index} 
-                  className={`flex flex-col items-center ${index === hoveredExample ? 'scale-110' : 'scale-100'} transition-all duration-300`}
-                  onMouseEnter={() => setHoveredExample(index)}
-                >
-                  <Button variant="ghost" className="p-0 h-auto relative">
-                    <img
-                      src={example.image}
-                      alt={`Example ${index + 1}`}
-                      width={100}
-                      height={100}
-                      className="rounded-md"
-                    />
-                    {index === hoveredExample && (
-                      <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-0 h-0 
-                                      border-l-8 border-r-8 border-t-8 border-t-gray-700 border-l-transparent border-r-transparent" />
-                    )}
-                  </Button>
-                </div>
-              ))}
-            </div>
-            <div className="w-full text-center min-h-[4rem] flex items-center justify-center bg-gray-700 rounded-md p-4 transition-all duration-300 relative">
-              <p className="text-sm">
-                {examples[hoveredExample].caption}
-              </p>
-              <div className={`absolute bottom-2 right-2 flex items-center ${getLoadingTimeColor(examples[hoveredExample].loadingTime)} rounded-full px-2 py-1 text-xs`}>
-                <Clock className="w-3 h-3 mr-1" />
-                <span className="font-semibold">
-                  {examples[hoveredExample].loadingTime}/5
-                </span>
-              </div>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
 
       <Dialog open={isInfoOpen} onOpenChange={setIsInfoOpen}>
         <DialogContent className="bg-gray-800 text-white">
