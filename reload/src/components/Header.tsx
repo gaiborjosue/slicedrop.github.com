@@ -13,10 +13,10 @@ const Header: React.FC<HeaderProps> = ({ showExamples }) => {
   const [hoveredExample, setHoveredExample] = useState<number | null>(0);  // Default to first example
 
   const examples = [
-    { image: '/14yrold.png', caption: 'The surface of the left hemisphere of a 2 years old healthy brain.', loadingTime: 2 },
-    { image: '/avf_small.png', caption: 'A contrast enhanced 3D MR image showing an arteriovenous fistula.', loadingTime: 1 },
-    { image: '/2yrold_small.png', caption: 'The surface of the left hemisphere of a 2 years old healthy brain.', loadingTime: 2 },
-    { image: '/brainstem_small.png', caption: 'A region of the brainstem of a human adult.', loadingTime: 1 },
+    { image: '/slicedrop.github.com/14yrold.png', caption: 'The surface of the left hemisphere of a 2 years old healthy brain.', loadingTime: 2 },
+    { image: '/slicedrop.github.com/avf_small.png', caption: 'A contrast enhanced 3D MR image showing an arteriovenous fistula.', loadingTime: 1 },
+    { image: '/slicedrop.github.com/2yrold_small.png', caption: 'The surface of the left hemisphere of a 2 years old healthy brain.', loadingTime: 2 },
+    { image: '/slicedrop.github.com/brainstem_small.png', caption: 'A region of the brainstem of a human adult.', loadingTime: 1 },
   ];
 
   const getLoadingTimeColor = (loadingTime: number) => {
@@ -25,7 +25,6 @@ const Header: React.FC<HeaderProps> = ({ showExamples }) => {
     return 'bg-red-500';
   };
 
-  // Design for examples displayed in the pop-up dialog with hover effect
   const ExamplesComponentInPopup = () => (
     <div className="grid grid-cols-2 gap-4">
       {examples.map((example, index) => (
@@ -54,7 +53,7 @@ const Header: React.FC<HeaderProps> = ({ showExamples }) => {
     </div>
   );
 
-  // Design for examples displayed on the page with the first one selected by default
+
   const ExamplesComponentOnPage = () => (
     <div className="flex flex-col items-start mb-4">
       <p className="mb-2">Try the examples...</p>
@@ -84,9 +83,9 @@ const Header: React.FC<HeaderProps> = ({ showExamples }) => {
         ))}
       </div>
 
-      {/* Display the details of the currently hovered example */}
+
       <div className="text-center min-h-[3rem] flex items-center justify-center bg-gray-700 rounded-md p-2 transition-all duration-300 relative text-xs">
-        <p className="pr-8">{hoveredExample !== null ? examples[hoveredExample]?.caption : null}</p>  {/* Ensure safe access */}
+        <p className="pr-8">{hoveredExample !== null ? examples[hoveredExample]?.caption : null}</p>
         <div className={`absolute bottom-1 right-1 flex items-center ${getLoadingTimeColor(hoveredExample !== null ? examples[hoveredExample]?.loadingTime : 0)} rounded-full px-1 py-0.5 text-[10px]`}>
           <Clock className="w-2 h-2 mr-0.5" />
           <span className="font-semibold">{hoveredExample !== null ? examples[hoveredExample]?.loadingTime : 0}/5</span>
@@ -98,7 +97,7 @@ const Header: React.FC<HeaderProps> = ({ showExamples }) => {
   return (
     <header className="p-6 flex justify-between items-center">
       <div className="flex items-center space-x-2">
-        <a href="/" className="text-3xl font-bold text-gray-400 hover:text-white transition">
+        <a href="/slicedrop.github.com/" className="text-3xl font-bold text-gray-400 hover:text-white transition">
           Slice:Drop
         </a>
       </div>

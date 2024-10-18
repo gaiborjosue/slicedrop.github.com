@@ -57,17 +57,17 @@ export default function App({ setFiles }: AppProps) {
     { 
       type: "Fibers", 
       formats: [".trk", ".tko"],
-      image: "/fibers.png"
+      image: "/slicedrop.github.com/fibers.png"
     },
     { 
       type: "Volumes", 
       formats: [".mgh", ".mgz", ".nrrd", ".nii", ".nii.gz", "DICOM"],
-      image: "/dicom.png"
+      image: "/slicedrop.github.com/dicom.png"
     },
     { 
       type: "Models", 
       formats: [".obj", ".vtk", ".stl", "FreeSurfer"],
-      image: "/surface.png"
+      image: "/slicedrop.github.com/surface.png"
     }
   ]
 
