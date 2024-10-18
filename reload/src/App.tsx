@@ -154,7 +154,7 @@ export default function App({ setFiles }: AppProps) {
         <div className="flex justify-between items-center">
           <div className="flex space-x-4">
             <Button variant="link" asChild>
-              <a href="https://github.com/yourusername/slidedrop" className="flex items-center text-white text-left">
+              <a href="https://github.com/gaiborjosue/slicedrop.github.com/tree/reload" className="flex items-center text-white text-left">
                 <Github className="w-4 h-4 mr-1" />
                 Source Code
               </a>
@@ -185,7 +185,7 @@ export default function App({ setFiles }: AppProps) {
             
           </DialogDescription>
           <Button variant="link" asChild>
-              <a href="/help" className="flex items-center text-white text-left">
+              <a href="https://github.com/gaiborjosue/slicedrop.github.com/issues" className="flex items-center text-white text-left">
                 <HelpCircle className="w-4 h-4 mr-1" />
                 Need Help?
               </a>
