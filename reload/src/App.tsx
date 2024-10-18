@@ -4,24 +4,28 @@ import Ripple from "@/components/ui/ripple";
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 
-
-export default function App() {
+interface AppProps {
+  setFiles: (files: File[]) => void; // Define the type for setFiles, which is a function that accepts an array of Files
+}
+export default function App({ setFiles }: AppProps) {
   const [isDragging, setIsDragging] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
-  const [files, setFiles] = useState<File[]>([])
   const [isExamplesOpen, setIsExamplesOpen] = useState(false)
   const [isFadingOut, setIsFadingOut] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [isInfoOpen, setIsInfoOpen] = useState(false)
   const [hoveredExample, setHoveredExample] = useState<number>(0)
+  const [files, setLocalFiles] = useState<File[]>([]);
+
+  
 
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const selectedFiles = Array.from(e.target.files)
-      setFiles(prevFiles => [...prevFiles, ...selectedFiles])
-      setIsFadingOut(true)
+      const selectedFiles = Array.from(e.target.files);
+      setLocalFiles(selectedFiles); // Save the local state
+      setFiles(selectedFiles); // Pass files to Niivue
     }
-  }
+  };
 
   const handleClick = () => {
     fileInputRef.current?.click()
@@ -38,12 +42,11 @@ export default function App() {
   }, [])
 
   const onDrop = useCallback((e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    setIsDragging(false)
-    const droppedFiles = Array.from(e.dataTransfer.files)
-    setFiles(prevFiles => [...prevFiles, ...droppedFiles])
-    setIsFadingOut(true)
-  }, [])
+    e.preventDefault();
+    const droppedFiles = Array.from(e.dataTransfer.files);
+    setLocalFiles(droppedFiles); // Save the local state
+    setFiles(droppedFiles); // Pass files to Niivue
+  }, [setFiles]);
 
   const getLoadingTimeColor = (loadingTime: number) => {
     if (loadingTime <= 2) return 'bg-green-500'
@@ -91,7 +94,7 @@ export default function App() {
         {examples.map((example, index) => (
           <div 
             key={index} 
-            className={`flex flex-col items-center ${index === hoveredExample ? 'scale-105' : 'scale-100'} transition-all duration-300`}
+            className={`flex flex-col items-center ${index === hoveredExample ? 'scale-110' : 'scale-100'} transition-all duration-300`}
             onMouseEnter={() => setHoveredExample(index)}
           >
             <Button variant="ghost" className="p-0 h-auto relative">
@@ -133,7 +136,7 @@ export default function App() {
           
           <a href="/"><h1 className="text-3xl font-bold text-gray-400 hover:text-white transition">Slice:Drop</h1></a>
         </div>
-        <div className="md:hidden">
+        <div className="xl-custom:hidden">
         <Button
             onClick={() => setIsExamplesOpen(true)}
             variant="secondary"
@@ -141,7 +144,7 @@ export default function App() {
             Run Examples
           </Button>
         </div>
-        <div className="hidden md:block absolute top-6 right-6 w-[316px]">
+        <div className="hidden xl-custom:block absolute top-6 right-6 w-[316px]">
           <ExamplesComponent />
         </div>
       </header>
@@ -247,7 +250,7 @@ export default function App() {
               {examples.map((example, index) => (
                 <div 
                   key={index} 
-                  className={`flex flex-col items-center ${index === hoveredExample ? 'scale-105' : 'scale-100'} transition-all duration-300`}
+                  className={`flex flex-col items-center ${index === hoveredExample ? 'scale-110' : 'scale-100'} transition-all duration-300`}
                   onMouseEnter={() => setHoveredExample(index)}
                 >
                   <Button variant="ghost" className="p-0 h-auto relative">
