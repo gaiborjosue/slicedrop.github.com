@@ -16,8 +16,6 @@ export default function App({ setFiles }: AppProps) {
   const [isInfoOpen, setIsInfoOpen] = useState(false)
   const [files, setLocalFiles] = useState<File[]>([]);
 
-  
-
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const selectedFiles = Array.from(e.target.files);
