@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - main
+      - reload
 
 jobs:
   build:
@@ -16,7 +16,7 @@ jobs:
 
       - name: Move to reload directory
         run: cd reload
-      
+
       - name: Setup Node
         uses: actions/setup-node@v3
 
