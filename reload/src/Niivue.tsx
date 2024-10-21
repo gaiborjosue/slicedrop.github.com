@@ -1,7 +1,6 @@
 import React from 'react';
 import { Niivue } from '@niivue/niivue';
 import { NiivuePanel } from './components/NiivuePanel.tsx';
-import Header from './components/Header';
 
 // Define the type for the files prop
 interface NiiVueProps {
@@ -18,7 +17,6 @@ const nv = new Niivue({
 const NiiVue: React.FC<NiiVueProps> = ({ files }) => {
   return (
     <div className="h-screen w-screen bg-black flex flex-col">
-      <Header showExamples={false}/>
       <div className="flex-1 flex justify-center items-center">
         <NiivuePanel nv={nv} volumes={files} />
       </div>

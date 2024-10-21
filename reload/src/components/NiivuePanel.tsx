@@ -1,22 +1,19 @@
 import React, { useEffect, useRef } from 'react';
-import { Box } from "@mui/material";
 import { Niivue } from '@niivue/niivue';
 
-// Define the prop types for NiivuePanel
 interface NiivuePanelProps {
   nv: Niivue;
-  volumes: File[]; // Expect an array of File objects
+  volumes: File[];
 }
 
 export const NiivuePanel: React.FC<NiivuePanelProps> = ({ nv, volumes }) => {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null); // Strongly type the ref as HTMLCanvasElement | null
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   let height = 480;
 
   useEffect(() => {
     async function loadVolumesAndAttach() {
       const canvas = canvasRef.current;
       if (canvas) {
-        // Attach the canvas to Niivue
         const rect = (canvas.parentNode as HTMLElement | null)?.getBoundingClientRect();
         if (rect) {
           canvas.width = rect.width;
@@ -40,9 +37,9 @@ export const NiivuePanel: React.FC<NiivuePanelProps> = ({ nv, volumes }) => {
             nv.drawScene(); // Redraw the scene on resize
           }
         };
+
         window.addEventListener('resize', handleResize);
 
-        // Cleanup when the component unmounts
         return () => {
           window.removeEventListener('resize', handleResize);
         };
@@ -53,8 +50,8 @@ export const NiivuePanel: React.FC<NiivuePanelProps> = ({ nv, volumes }) => {
   }, [nv, volumes]);
 
   return (
-    <Box
-      sx={{
+    <div
+      style={{
         display: 'flex',
         width: '100%',
         height: '100%',
@@ -62,6 +59,6 @@ export const NiivuePanel: React.FC<NiivuePanelProps> = ({ nv, volumes }) => {
       }}
     >
       <canvas ref={canvasRef} height={height} width={640} />
-    </Box>
+    </div>
   );
 };

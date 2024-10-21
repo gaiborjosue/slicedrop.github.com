@@ -3,14 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Clock } from 'lucide-react';
 
-interface HeaderProps {
-  setIsExamplesOpen?: React.Dispatch<React.SetStateAction<boolean>>;
-  showExamples: boolean;
-}
 
-const Header: React.FC<HeaderProps> = ({ showExamples }) => {
+const Header = () => {
   const [isExamplesOpen, setIsExamplesOpenState] = useState(false);
-  const [hoveredExample, setHoveredExample] = useState<number | null>(0);  // Default to first example
+  const [hoveredExample, setHoveredExample] = useState<number | null>(0); 
 
   const examples = [
     { image: '/slicedrop.github.com/14yrold.png', caption: 'The surface of the left hemisphere of a 2 years old healthy brain.', loadingTime: 2 },
@@ -33,8 +29,8 @@ const Header: React.FC<HeaderProps> = ({ showExamples }) => {
           className={`w-full flex flex-col items-center p-4 border border-gray-700 rounded-lg bg-gray-900 transform transition-transform duration-300 cursor-pointer ${
             hoveredExample === index ? 'scale-105 border-white' : 'scale-100'
           }`}
-          onMouseEnter={() => setHoveredExample(index)}  // Set hovered example by index
-          onMouseLeave={() => setHoveredExample(null)}   // Reset hover state to null
+          onMouseEnter={() => setHoveredExample(index)}
+          onMouseLeave={() => setHoveredExample(null)}
         >
           <img
             src={example.image}
@@ -102,30 +98,25 @@ const Header: React.FC<HeaderProps> = ({ showExamples }) => {
         </a>
       </div>
 
-      {showExamples && (
-        <>
           <div className="xl-custom:hidden">
             <Button onClick={() => setIsExamplesOpenState(true)} variant="secondary">
               Run Examples
             </Button>
           </div>
 
-          {/* Pop-up Dialog with hover effect and scaling for examples */}
           <Dialog open={isExamplesOpen} onOpenChange={setIsExamplesOpenState}>
             <DialogContent className="bg-gray-800 text-white">
               <DialogHeader>
                 <DialogTitle>Run Examples</DialogTitle>
               </DialogHeader>
-              <ExamplesComponentInPopup />  {/* Render the pop-up design with hover effects */}
+              <ExamplesComponentInPopup />
             </DialogContent>
           </Dialog>
 
-          {/* On-page examples design */}
+
           <div className="hidden xl-custom:block absolute top-6 right-6 w-[316px]">
-            <ExamplesComponentOnPage />  {/* Render the on-page design */}
+            <ExamplesComponentOnPage />
           </div>
-        </>
-      )}
     </header>
   );
 };
