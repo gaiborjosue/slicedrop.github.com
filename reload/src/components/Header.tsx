@@ -9,7 +9,7 @@ const Header = () => {
   const [hoveredExample, setHoveredExample] = useState<number | null>(0); 
 
   const examples = [
-    { image: '/slicedrop.github.com/14yrold.png', caption: 'The surface of the left hemisphere of a 2 years old healthy brain.', loadingTime: 2 },
+    { image: '/slicedrop.github.com/14yrold.png', caption: 'The surface of the left hemisphere of a 2 years old healthy brain.', loadingTime: 3 },
     { image: '/slicedrop.github.com/avf_small.png', caption: 'A contrast enhanced 3D MR image showing an arteriovenous fistula.', loadingTime: 1 },
     { image: '/slicedrop.github.com/2yrold_small.png', caption: 'The surface of the left hemisphere of a 2 years old healthy brain.', loadingTime: 2 },
     { image: '/slicedrop.github.com/brainstem_small.png', caption: 'A region of the brainstem of a human adult.', loadingTime: 1 },
@@ -80,7 +80,7 @@ const Header = () => {
       </div>
 
 
-      <div className="text-center min-h-[3rem] flex items-center justify-center bg-gray-700 rounded-md p-2 transition-all duration-300 relative text-xs">
+      <div className="w-full text-center min-h-[3rem] flex items-center justify-center bg-gray-700 rounded-md p-2 transition-all duration-300 relative text-xs">
         <p className="pr-8">{hoveredExample !== null ? examples[hoveredExample]?.caption : null}</p>
         <div className={`absolute bottom-1 right-1 flex items-center ${getLoadingTimeColor(hoveredExample !== null ? examples[hoveredExample]?.loadingTime : 0)} rounded-full px-1 py-0.5 text-[10px]`}>
           <Clock className="w-2 h-2 mr-0.5" />
